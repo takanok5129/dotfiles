@@ -29,6 +29,24 @@ set hlsearch
 set incsearch
 set wrapscan
 
+" path settings
+
+function! IncludePath(path)
+  if has('win16') || has('win32') || has('win64')
+    let delimiter = ";"
+  else
+    let delimiter = ":"
+  endif
+  let pathlist = split($PATH, delimiter)
+  if isdirectory(a:path) && index(pathlist, a:path) == -1
+    let $PATH=a:path.delimiter.$PATH
+  endif
+endfunction
+
+call IncludePath(expand('~/.pyenv/shims'))
+set pyxversion=3
+let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+
 "dein Scripts-----------------------------
 if &compatible
   set nocompatible               " Be iMproved
@@ -48,7 +66,19 @@ if dein#load_state('$HOME/')
   call dein#add('itchyny/lightline.vim')
   call dein#add('osyo-manga/vim-anzu')
   call dein#add('nanotech/jellybeans.vim')
-  call dein#add('scrooloose/syntastic')
+  call dein#add('vim-syntastic/syntastic')
+  call dein#add('davidhalter/jedi-vim')
+  call dein#add('lambdalisue/vim-pyenv')
+  call dein#add('fatih/vim-go')
+  call dein#add('elzr/vim-json')
+  call dein#add('kylef/apiblueprint.vim')
+  call dein#add('plasticboy/vim-markdown')
+
+  "call dein#add('Shougo/deoplete.nvim')
+  "if !has('nvim')
+  "  call dein#add('roxma/nvim-yarp')
+  "  call dein#add('roxma/vim-hug-neovim-rpc')
+  "endif
 
   " Required:
   call dein#end()
@@ -85,5 +115,15 @@ let g:lightline = {
       \ 'separator': { 'left': "\u2b80", 'right': "\u2b82" },
       \ 'subseparator': { 'left': "\u2b81", 'right': "\u2b83" }
       \ }
+
+" syntastic
+let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+
+" jedi-vim
+autocmd FileType python setlocal completeopt-=preview
+
+" deoplete
+let g:deoplete#enable_at_startup = 1
+
 
 colorscheme jellybeans

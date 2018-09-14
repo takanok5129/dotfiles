@@ -6,6 +6,7 @@ export LANG=ja_JP.UTF-8
 export KCODE=u
 
 bindkey -v
+bindkey "^?" backward-delete-char
 
 setopt no_beep
 setopt auto_cd
@@ -13,6 +14,8 @@ setopt notify
 
 fpath=(/usr/local/share/zsh-completions $fpath)
 
+autoload -U compinit
+compinit
 #autoload -U compinit; compinit
 setopt auto_list
 setopt auto_menu
@@ -68,6 +71,7 @@ SPROMPT=$tmp_sprompt
 
 RPROMPT=$'%{\e[38;5;251m%}%D{%b%/%d}, %*%{\e[m%}'
 
+# short commands
 alias l='ls'
 alias la='ls -a'
 alias ll='ls -la'
@@ -75,11 +79,21 @@ alias ll='ls -la'
 alias h='history'
 alias a='./a.out'
 
+# rbenv
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
+# pyenv
 export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
 export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# nodebrew
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+
+# mysqlenv
+source ~/.mysqlenv/etc/bashrc
+
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
