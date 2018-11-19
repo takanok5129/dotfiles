@@ -71,6 +71,15 @@ SPROMPT=$tmp_sprompt
 
 RPROMPT=$'%{\e[38;5;251m%}%D{%b%/%d}, %*%{\e[m%}'
 
+# auto-fu.zsh
+source $HOME/.zsh/auto-fu.zsh/auto-fu.zsh
+function zle-line-init(){
+    auto-fu-init
+}
+zle -N zle-line-init
+zstyle ':auto-fu:var' postdisplay $''
+
+
 # short commands
 alias l='ls'
 alias la='ls -a'
@@ -94,6 +103,10 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 
 # mysqlenv
-source ~/.mysqlenv/etc/bashrc
+# source ~/.mysqlenv/etc/bashrc
+export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+# rust
+export PATH="$HOME/.cargo/bin:$PATH"
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
