@@ -1,4 +1,11 @@
-scriptencoding utf-8 set encoding=utf-8 set ambw=double set smarttab set tabstop=2 set shiftwidth=2 set expandtab
+scriptencoding utf-8
+
+set encoding=utf-8
+set ambw=double
+set smarttab
+set tabstop=2
+set shiftwidth=2
+set expandtab
 set softtabstop=0
 set shiftround
 set infercase
@@ -37,7 +44,7 @@ function! IncludePath(path)
 endfunction
 
 call IncludePath(expand('$HOME/.pyenv/shims'))
-let g:python_host_prog = ''
+let g:python_host_prog = $PYENV_ROOT . '/shims/python2'
 let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 
 "dein Scripts-----------------------------
@@ -62,7 +69,9 @@ if dein#load_state('$HOME/')
   call dein#add('Lokaltog/vim-easymotion')
   call dein#add('vim-syntastic/syntastic')
   call dein#add('davidhalter/jedi-vim')
+  call dein#add('zchee/deoplete-jedi')
   call dein#add('lambdalisue/vim-pyenv')
+  call dein#add('zchee/deoplete-go', {'build': 'make'})
   call dein#add('fatih/vim-go')
   call dein#add('elzr/vim-json')
   call dein#add('kylef/apiblueprint.vim')
