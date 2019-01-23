@@ -23,8 +23,8 @@ setopt list_packed
 setopt list_types
 
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 setopt bang_hist
 setopt extended_history
 setopt hist_ignore_dups
@@ -93,11 +93,13 @@ export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
 
 # pyenv
-export PATH="$HOME/.pyenv/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+# neovim
+alias vim="nvim"
 
 # nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
@@ -109,4 +111,5 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# .zshrc.local for local settings
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

@@ -1,11 +1,4 @@
-scriptencoding utf-8
-set encoding=utf-8
-set ambw=double
-
-set smarttab
-set tabstop=2
-set shiftwidth=2
-set expandtab
+scriptencoding utf-8 set encoding=utf-8 set ambw=double set smarttab set tabstop=2 set shiftwidth=2 set expandtab
 set softtabstop=0
 set shiftround
 set infercase
@@ -13,7 +6,7 @@ set laststatus=2
 set ruler
 set number
 set list
-"set cursorline
+set cursorline
 set hidden
 set backspace=indent,eol,start
 set autoindent
@@ -43,8 +36,8 @@ function! IncludePath(path)
   endif
 endfunction
 
-call IncludePath(expand('~/.pyenv/shims'))
-set pyxversion=3
+call IncludePath(expand('$HOME/.pyenv/shims'))
+let g:python_host_prog = ''
 let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
 
 "dein Scripts-----------------------------
@@ -66,6 +59,7 @@ if dein#load_state('$HOME/')
   call dein#add('itchyny/lightline.vim')
   call dein#add('osyo-manga/vim-anzu')
   call dein#add('nanotech/jellybeans.vim')
+  call dein#add('Lokaltog/vim-easymotion')
   call dein#add('vim-syntastic/syntastic')
   call dein#add('davidhalter/jedi-vim')
   call dein#add('lambdalisue/vim-pyenv')
@@ -75,11 +69,11 @@ if dein#load_state('$HOME/')
   call dein#add('plasticboy/vim-markdown')
   call dein#add('chrisbra/Colorizer')
 
-  "call dein#add('Shougo/deoplete.nvim')
-  "if !has('nvim')
-  "  call dein#add('roxma/nvim-yarp')
-  "  call dein#add('roxma/vim-hug-neovim-rpc')
-  "endif
+  call dein#add('Shougo/deoplete.nvim')
+  if !has('nvim')
+    call dein#add('roxma/nvim-yarp')
+    call dein#add('roxma/vim-hug-neovim-rpc')
+  endif
 
   " Required:
   call dein#end()
