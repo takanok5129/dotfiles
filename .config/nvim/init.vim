@@ -28,6 +28,7 @@ set smartcase
 set hlsearch
 set incsearch
 set wrapscan
+set splitright
 
 " path settings
 
@@ -43,9 +44,13 @@ function! IncludePath(path)
   endif
 endfunction
 
+" python
 call IncludePath(expand('$HOME/.pyenv/shims'))
 let g:python_host_prog = $PYENV_ROOT . '/shims/python2'
 let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+
+" golang
+set runtimepath+=$HOME/go/src/golang.org/x/lint/misc/vim
 
 "dein Scripts-----------------------------
 if &compatible
@@ -77,6 +82,8 @@ if dein#load_state('$HOME/')
   call dein#add('kylef/apiblueprint.vim')
   call dein#add('plasticboy/vim-markdown')
   call dein#add('chrisbra/Colorizer')
+  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('thinca/vim-quickrun')
 
   call dein#add('Shougo/deoplete.nvim')
   if !has('nvim')
@@ -122,6 +129,7 @@ let g:lightline = {
 
 " syntastic
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_go_checkers = ['go', 'golint', 'govet']
 
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
@@ -129,5 +137,45 @@ autocmd FileType python setlocal completeopt-=preview
 " deoplete
 let g:deoplete#enable_at_startup = 1
 
+" vim-anzu
+" mapping
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+" clear status
+nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
+" statusline
+set statusline=%{anzu#search_status()}
+
+" vim-go
+let g:go_gocode_unimported_packages = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+let g:go_fmt_command = "goimports"
+
+" quickrun
+let g:quickrun_config = {
+      \  "_": {
+      \     "runner": "vimproc",
+      \     "runner/vimproc/updatetime" : 60,
+      \     "hook/time/enable" : 1,
+      \     "hook/time/dest": "buffer",
+      \     "outputter/error/success": "buffer",
+      \     "outputter/buffer/split": ":botright 4sp",
+      \     "outputter/buffer/close_on_empty": 1,
+      \  },
+      \  "python": {
+      \     "command": "$PYENV_ROOT/shims/python3",
+      \  },
+      \  "go": {
+      \     "outputter/buffer/split": "vertical",
+      \  },
+      \ }
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_scessions() : "\<C-c>"
+nnoremap <silent><F5> :QuickRun -mode n<CR>
+vnoremap <silent><F5> :QuickRun -mode v<CR>
 
 colorscheme jellybeans

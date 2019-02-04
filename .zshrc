@@ -72,12 +72,12 @@ SPROMPT=$tmp_sprompt
 RPROMPT=$'%{\e[38;5;251m%}%D{%b%/%d}, %*%{\e[m%}'
 
 # auto-fu.zsh
-source $HOME/.zsh/auto-fu.zsh/auto-fu.zsh
-function zle-line-init(){
-    auto-fu-init
-}
-zle -N zle-line-init
-zstyle ':auto-fu:var' postdisplay $''
+#source $HOME/.zsh/auto-fu.zsh/auto-fu.zsh
+#function zle-line-init(){
+#    auto-fu-init
+#}
+#zle -N zle-line-init
+#zstyle ':auto-fu:var' postdisplay $''
 
 
 # short commands
@@ -100,6 +100,7 @@ eval "$(pyenv virtualenv-init -)"
 
 # neovim
 alias vim="nvim"
+export NVIM_PYTHON_LOG_FILE="/tmp/nvim-python-log"
 
 # nodebrew
 export PATH=$HOME/.nodebrew/current/bin:$PATH
@@ -107,6 +108,10 @@ export PATH=$HOME/.nodebrew/current/bin:$PATH
 # mysqlenv
 # source ~/.mysqlenv/etc/bashrc
 export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+
+# golang
+export GOPATH=$HOME/go
+export PATH=$HOME/go/bin:$PATH
 
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"

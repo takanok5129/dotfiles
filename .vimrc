@@ -43,9 +43,13 @@ function! IncludePath(path)
   endif
 endfunction
 
+" python
 call IncludePath(expand('~/.pyenv/shims'))
 set pyxversion=3
 let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+
+" golang
+set runtimepath+=$HOME/go/src/github.com/golang/lint/misc/vim
 
 "dein Scripts-----------------------------
 if &compatible
@@ -75,11 +79,13 @@ if dein#load_state('$HOME/')
   call dein#add('plasticboy/vim-markdown')
   call dein#add('chrisbra/Colorizer')
 
-  "call dein#add('Shougo/deoplete.nvim')
-  "if !has('nvim')
-  "  call dein#add('roxma/nvim-yarp')
-  "  call dein#add('roxma/vim-hug-neovim-rpc')
-  "endif
+  " call dein#add('Shougo/deoplete.nvim')
+  " call dein#add('zchee/deoplete-go', {'build': 'make'})
+
+  " if !has('nvim')
+  "   call dein#add('roxma/nvim-yarp')
+  "   call dein#add('roxma/vim-hug-neovim-rpc')
+  " endif
 
   " Required:
   call dein#end()
@@ -119,6 +125,7 @@ let g:lightline = {
 
 " syntastic
 let g:syntastic_python_checkers = ['pyflakes', 'pep8']
+let g:syntastic_go_checkers = ['go', 'golint', 'govet']
 
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
@@ -126,5 +133,12 @@ autocmd FileType python setlocal completeopt-=preview
 " deoplete
 let g:deoplete#enable_at_startup = 1
 
+" vim-go
+let g:go_gocode_unimported_packages = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
+let g:go_fmt_command = "goimports"
 
 colorscheme jellybeans
