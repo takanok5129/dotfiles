@@ -191,18 +191,18 @@
                 },
                 {
                     "from": {
-                        "key_code": "international5"
-                    },
-                    "to": {
-                        "key_code": "japanese_eisuu"
-                    }
-                },
-                {
-                    "from": {
                         "key_code": "international4"
                     },
                     "to": {
                         "key_code": "japanese_kana"
+                    }
+                },
+                {
+                    "from": {
+                        "key_code": "international5"
+                    },
+                    "to": {
+                        "key_code": "japanese_eisuu"
                     }
                 }
             ],

@@ -28,6 +28,7 @@ set smartcase
 set hlsearch
 set incsearch
 set wrapscan
+set splitright
 
 " path settings
 
@@ -78,6 +79,8 @@ if dein#load_state('$HOME/')
   call dein#add('kylef/apiblueprint.vim')
   call dein#add('plasticboy/vim-markdown')
   call dein#add('chrisbra/Colorizer')
+  call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
+  call dein#add('thinca/vim-quickrun')
 
   " call dein#add('Shougo/deoplete.nvim')
   " call dein#add('zchee/deoplete-go', {'build': 'make'})
@@ -140,5 +143,27 @@ let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 
 let g:go_fmt_command = "goimports"
+
+" quickrun
+let g:quickrun_config = {
+      \  "_": {
+      \     "runner": "vimproc",
+      \     "runner/vimproc/updatetime" : 60,
+      \     "hook/time/enable" : 0,
+      \     "hook/time/dest": "buffer",
+      \     "outputter/error/success": "buffer",
+      \     "outputter/buffer/split": ":botright 4sp",
+      \     "outputter/buffer/close_on_empty": 1,
+      \  },
+      \  "python": {
+      \     "command": "$PYENV_ROOT/shims/python3",
+      \  },
+      \  "go": {
+      \     "outputter/buffer/split": "vertical",
+      \  },
+      \ }
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_scessions() : "\<C-c>"
+nnoremap <silent><F5> :QuickRun -mode n<CR>
+vnoremap <silent><F5> :QuickRun -mode v<CR>
 
 colorscheme jellybeans

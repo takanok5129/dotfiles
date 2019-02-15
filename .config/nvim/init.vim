@@ -48,6 +48,7 @@ endfunction
 call IncludePath(expand('$HOME/.pyenv/shims'))
 let g:python_host_prog = $PYENV_ROOT . '/shims/python2'
 let g:python3_host_prog = $PYENV_ROOT . '/shims/python3'
+let g:pyenv#auto_activate = 0
 
 " golang
 set runtimepath+=$HOME/go/src/golang.org/x/lint/misc/vim
@@ -68,14 +69,16 @@ if dein#load_state('$HOME/')
   " Required:
   call dein#add('$HOME/repos/github.com/Shougo/dein.vim')
 
+  call dein#add('lambdalisue/vim-pyenv')
+  call dein#add('Shougo/denite.nvim')
   call dein#add('itchyny/lightline.vim')
   call dein#add('osyo-manga/vim-anzu')
   call dein#add('nanotech/jellybeans.vim')
   call dein#add('Lokaltog/vim-easymotion')
   call dein#add('vim-syntastic/syntastic')
+  call dein#add('Vimjas/vim-python-pep8-indent')
   call dein#add('davidhalter/jedi-vim')
   call dein#add('zchee/deoplete-jedi')
-  call dein#add('lambdalisue/vim-pyenv')
   call dein#add('zchee/deoplete-go', {'build': 'make'})
   call dein#add('fatih/vim-go')
   call dein#add('elzr/vim-json')
@@ -133,6 +136,16 @@ let g:syntastic_go_checkers = ['go', 'golint', 'govet']
 
 " jedi-vim
 autocmd FileType python setlocal completeopt-=preview
+if jedi#init_python()
+  function! s:jedi_auto_force_py_version() abort
+    let g:jedi#force_py_version = pyenv#python#get_internal_major_version()
+  endfunction
+  augroup vim-pyenv-custom-augroup
+    autocmd! *
+    autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+    autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+  augroup END
+endif
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
