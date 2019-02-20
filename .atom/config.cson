@@ -1,0 +1,7 @@
+"*":
+  "atom-ide-ui":
+    "atom-ide-code-format":
+      formatOnSave: true
+  core: {}
+  "exception-reporting":
+    userId: "97d3751a-b79f-47c8-8fbf-f8ab5c06bf4c"
