@@ -87,6 +87,8 @@ if dein#load_state('$HOME/')
   call dein#add('chrisbra/Colorizer')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('thinca/vim-quickrun')
+  call dein#add('airblade/vim-gitgutter')
+  call dein#add('tpope/vim-fugitive')
 
   call dein#add('Shougo/deoplete.nvim')
   if !has('nvim')
@@ -160,6 +162,9 @@ nmap # <Plug>(anzu-sharp-with-echo)
 nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 " statusline
 set statusline=%{anzu#search_status()}
+
+" vim-easymotion
+let g:EasyMotion_leader_key=";"
 
 " vim-go
 let g:go_gocode_unimported_packages = 1
