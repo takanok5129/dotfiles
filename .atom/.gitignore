@@ -6,3 +6,5 @@ packages
 .apm
 .node-gyp
 .npm
+.atom-socket-secret-*
+github.cson

@@ -116,5 +116,9 @@ export PATH=$HOME/go/bin:$PATH
 # rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# imagemagick
+export PKG_CONFIG_PATH=/opt/ImageMagick/lib/pkgconfig
+
 # .zshrc.local for local settings
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+export PATH="/usr/local/opt/texinfo/bin:$PATH"

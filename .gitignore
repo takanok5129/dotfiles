@@ -1,6 +1,7 @@
 .config/nvim/.netrwhist
 .config/karabiner/automatic_backups
 .config/configstore/update-notifier-npm.json
+.gitconfig
 
 # local files
 .zshrc.local

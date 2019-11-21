@@ -2,6 +2,9 @@
   "atom-ide-ui":
     "atom-ide-code-format":
       formatOnSave: true
-  core: {}
+  core:
+    telemetryConsent: "no"
   "exception-reporting":
     userId: "97d3751a-b79f-47c8-8fbf-f8ab5c06bf4c"
+  welcome:
+    showOnStartup: false

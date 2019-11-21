@@ -81,6 +81,8 @@ if dein#load_state('$HOME/')
   call dein#add('chrisbra/Colorizer')
   call dein#add('Shougo/vimproc.vim', {'build' : 'make'})
   call dein#add('thinca/vim-quickrun')
+  call dein#add('rust-lang/rust.vim')
+  call dein#add('racer-rust/vim-racer')
 
   " call dein#add('Shougo/deoplete.nvim')
   " call dein#add('zchee/deoplete-go', {'build': 'make'})

@@ -29,6 +29,7 @@ set hlsearch
 set incsearch
 set wrapscan
 set splitright
+set nofoldenable
 
 " path settings
 
@@ -111,6 +112,8 @@ if dein#check_install()
 endif
 
 "End dein Scripts-------------------------
+
+autocmd BufNewFile,BufRead *.tera setlocal ft=html
 
 let g:lightline = {
       \ 'colorscheme': 'wombat',
