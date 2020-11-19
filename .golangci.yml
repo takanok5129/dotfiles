@@ -11,4 +11,21 @@ linters:
     - unconvert
     - scopelint
     - maligned
+    - dupl
+    - depguard
+    - bodyclose
+    - prealloc
+    - godox
   fast: false
+
+linters-settings:
+  dupl:
+    threshold: 100
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - dupl
+        - scopelint
+  max-issues-per-linter: 0

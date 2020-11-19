@@ -90,6 +90,8 @@ if dein#load_state('$HOME/')
   call dein#add('thinca/vim-quickrun')
   call dein#add('airblade/vim-gitgutter')
   call dein#add('tpope/vim-fugitive')
+  call dein#add('udalov/kotlin-vim')
+  call dein#add('keith/swift.vim')
 
   call dein#add('Shougo/deoplete.nvim')
   if !has('nvim')

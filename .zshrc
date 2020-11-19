@@ -3,6 +3,7 @@ eval $(/usr/libexec/path_helper -s)
 
 export EDITOR=vim
 export LANG=ja_JP.UTF-8
+export LC_ALL=ja_JP.UTF-8
 export KCODE=u
 
 bindkey -v
@@ -79,7 +80,6 @@ RPROMPT=$'%{\e[38;5;251m%}%D{%b%/%d}, %*%{\e[m%}'
 #zle -N zle-line-init
 #zstyle ':auto-fu:var' postdisplay $''
 
-
 # short commands
 alias l='ls'
 alias la='ls -a'
@@ -89,21 +89,27 @@ alias h='history'
 alias a='./a.out'
 
 # rbenv
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+if [ -d "$HOME/.rbenv" ]; then
+  export PATH="$HOME/.rbenv/bin:$PATH"
+  eval "$(rbenv init -)"
+fi
 
 # pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+if [ -d "$HOME/.pyenv" ]; then
+  export PYENV_ROOT="$HOME/.pyenv"
+  export PATH="$PYENV_ROOT/bin:$PATH"
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
+fi
 
 # neovim
 alias vim="nvim"
 export NVIM_PYTHON_LOG_FILE="/tmp/nvim-python-log"
 
 # nodebrew
-export PATH=$HOME/.nodebrew/current/bin:$PATH
+if [ -d "$HOME/.nodebrew" ]; then
+  export PATH=$HOME/.nodebrew/current/bin:$PATH
+fi
 
 # mysqlenv
 # source ~/.mysqlenv/etc/bashrc
@@ -113,12 +119,25 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 export GOPATH=$HOME/go
 export PATH=$HOME/go/bin:$PATH
 
+# goenv
+if [ -d "$HOME/.goenv" ]; then
+  export GOENV_ROOT="$HOME/.goenv"
+  export PATH="$GOENV_ROOT/bin:$PATH"
+  eval "$(goenv init -)"
+fi
+
 # rust
-export PATH="$HOME/.cargo/bin:$PATH"
+if [ -d "$HOME/.cargo" ]; then
+  export PATH="$HOME/.cargo/bin:$PATH"
+fi
 
 # imagemagick
 export PKG_CONFIG_PATH=/opt/ImageMagick/lib/pkgconfig
 
+# texinfo
+if [ -d "/usr/local/opt/texinfo" ]; then
+  export PATH="/usr/local/opt/texinfo/bin:$PATH"
+fi
+
 # .zshrc.local for local settings
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-export PATH="/usr/local/opt/texinfo/bin:$PATH"
