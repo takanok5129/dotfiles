@@ -118,6 +118,7 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 # golang
 export GOPATH=$HOME/go
 export PATH=$HOME/go/bin:$PATH
+export GO111MODULE=off
 
 # goenv
 if [ -d "$HOME/.goenv" ]; then
