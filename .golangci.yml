@@ -1,21 +1,22 @@
 
 linters:
   enable:
-    - misspell
-    - goimports
-    - gosec
-    - golint
-    - goconst
-    - unparam
-    - gocognit
-    - unconvert
-    - scopelint
-    - maligned
-    - dupl
-    - depguard
     - bodyclose
-    - prealloc
+    - depguard
+    - dupl
+    - ifshort
+    - gocognit
+    - goconst
     - godox
+    - goimports
+    - golint
+    - gosec
+    - maligned
+    - misspell
+    - prealloc
+    - scopelint
+    - unconvert
+    - unparam
   fast: false
 
 linters-settings:
