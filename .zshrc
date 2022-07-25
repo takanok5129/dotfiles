@@ -26,6 +26,7 @@ setopt list_types
 HISTFILE=~/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
+HISTTIMEFORMAT='%F %T '
 setopt bang_hist
 setopt extended_history
 setopt hist_ignore_dups
@@ -119,7 +120,7 @@ export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 # golang
 export GOPATH=$HOME/go
 export PATH=$HOME/go/bin:$PATH
-export GO111MODULE=off
+export GO111MODULE=on
 
 # goenv
 if [ -d "$HOME/.goenv" ]; then
