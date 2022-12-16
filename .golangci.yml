@@ -4,19 +4,25 @@ linters:
     - bodyclose
     - depguard
     - dupl
-    - ifshort
+    - errorlint
+    - exportloopref
+    - forbidigo
+    - forcetypeassert
     - gocognit
     - goconst
     - godox
     - goimports
-    - golint
+    - gomnd
     - gosec
-    - maligned
+    - makezero
     - misspell
+    - nilerr
     - prealloc
-    - scopelint
+    - revive
+    - tagliatelle
     - unconvert
     - unparam
+    - wastedassign
   fast: false
 
 linters-settings:
