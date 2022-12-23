@@ -1,8 +1,12 @@
 files=(
+  ".atom"
   ".bash_profile"
   ".config"
+  ".golangci.yml"
+  ".my.cnf"
   ".vimrc"
   ".zsh"
+  ".zshrc"
 )
 
 curd=`dirname $0`

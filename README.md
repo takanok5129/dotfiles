@@ -1,19 +1,20 @@
 # dotfiles
 
-MacOSX用のdotfiles
+Mac 用の dotfiles
 
 ## 導入ツール
 
 - zsh
-    - auto-fu.zsh
+    - zsh-completions
+    - zsh-autosuggestions
 - Homebrew
-    - golang
 - Atom
 - Rust
-- karabiner
-- Vim, Neovim
+- Neovim
     - dein.vim
 - pyenv
 - rbenv
 - nodebrew
-- mysqlenv
+- goenv
+- plenv
+- MySQL

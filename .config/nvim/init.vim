@@ -59,16 +59,22 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-" Required:
-set runtimepath+=$HOME/repos/github.com/Shougo/dein.vim
+" Set Dein base path (required)
+let s:dein_base = '$HOME/.cache/dein'
+
+" Set Dein source path (required)
+let s:dein_src = '$HOME/.cache/dein/repos/github.com/Shougo/dein.vim'
+
+" Set Dein runtime path (required)
+execute 'set runtimepath+=' . s:dein_src
 
 " Required:
-if dein#load_state('$HOME/')
-  call dein#begin('$HOME/')
+if dein#load_state(s:dein_base)
+  call dein#begin(s:dein_base)
 
   " Let dein manage dein
   " Required:
-  call dein#add('$HOME/repos/github.com/Shougo/dein.vim')
+  call dein#add(s:dein_src)
 
   call dein#add('lambdalisue/vim-pyenv')
   call dein#add('Shougo/denite.nvim')

@@ -13,10 +13,14 @@ setopt no_beep
 setopt auto_cd
 setopt notify
 
-fpath=(/usr/local/share/zsh-completions $fpath)
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-autoload -U compinit
-compinit
+  autoload -Uz compinit
+  compinit
+fi
+
 #autoload -U compinit; compinit
 setopt auto_list
 setopt auto_menu
@@ -113,9 +117,10 @@ if [ -d "$HOME/.nodebrew" ]; then
   export PATH=$HOME/.nodebrew/current/bin:$PATH
 fi
 
-# mysqlenv
-# source ~/.mysqlenv/etc/bashrc
-export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+# mysql
+if [ -d "/usr/local/opt/mysql@5.7" ]; then
+  export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+fi
 
 # golang
 export GOPATH=$HOME/go
@@ -128,6 +133,12 @@ if [ -d "$HOME/.goenv" ]; then
   export GOENV_ROOT="$HOME/.goenv"
   export PATH="$GOENV_ROOT/bin:$PATH"
   eval "$(goenv init -)"
+fi
+
+# plenv
+if [ -d "$HOME/.plenv" ]; then
+  export PATH="$HOME/.plenv/bin:$PATH"
+  eval "$(plenv init -)"
 fi
 
 # rust
