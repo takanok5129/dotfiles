@@ -1,10 +1,9 @@
 # Created by newuser for 5.4.2
 eval $(/usr/libexec/path_helper -s)
 
-export EDITOR=vim
+export EDITOR=nvim
 export LANG=ja_JP.UTF-8
 export LC_ALL=ja_JP.UTF-8
-export KCODE=u
 
 bindkey -v
 bindkey "^?" backward-delete-char
@@ -14,14 +13,17 @@ setopt auto_cd
 setopt notify
 
 if type brew &>/dev/null; then
-  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
-  source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  HOMEBREW_PREFIX=$(brew --prefix)
+  FPATH=$HOMEBREW_PREFIX/share/zsh-completions:$FPATH
+  source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
   autoload -Uz compinit
   compinit
+
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
-#autoload -U compinit; compinit
 setopt auto_list
 setopt auto_menu
 setopt list_packed
@@ -77,14 +79,6 @@ SPROMPT=$tmp_sprompt
 
 RPROMPT=$'%{\e[38;5;251m%}%D{%b%/%d}, %*%{\e[m%}'
 
-# auto-fu.zsh
-#source $HOME/.zsh/auto-fu.zsh/auto-fu.zsh
-#function zle-line-init(){
-#    auto-fu-init
-#}
-#zle -N zle-line-init
-#zstyle ':auto-fu:var' postdisplay $''
-
 # short commands
 alias l='ls'
 alias la='ls -a'
@@ -110,21 +104,27 @@ fi
 
 # neovim
 alias vim="nvim"
+alias evimdiff='nvim -d "$(mktemp)" "$(mktemp)"'
 export NVIM_PYTHON_LOG_FILE="/tmp/nvim-python-log"
 
-# nodebrew
-if [ -d "$HOME/.nodebrew" ]; then
-  export PATH=$HOME/.nodebrew/current/bin:$PATH
-fi
+# vscode
+[[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
+
+# volta
+export VOLTA_HOME="$HOME/.volta"
+export PATH="$VOLTA_HOME/bin:$PATH"
 
 # mysql
 if [ -d "/usr/local/opt/mysql@5.7" ]; then
   export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
 fi
 
+if [ -d "/opt/homebrew/opt/mysql@8.0" ]; then
+  export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
+fi
+
 # golang
 export GOPATH=$HOME/go
-export PATH=$HOME/go/bin:$PATH
 export GO111MODULE=on
 
 # goenv
@@ -133,6 +133,9 @@ if [ -d "$HOME/.goenv" ]; then
   export GOENV_ROOT="$HOME/.goenv"
   export PATH="$GOENV_ROOT/bin:$PATH"
   eval "$(goenv init -)"
+  #export PATH="$GOROOT/bin:$PATH"
+  export PATH="$PATH:$GOPATH/bin"
+  export PATH="$GOENV_ROOT/shims:$PATH"
 fi
 
 # plenv
@@ -153,6 +156,12 @@ export PKG_CONFIG_PATH=/opt/ImageMagick/lib/pkgconfig
 if [ -d "/usr/local/opt/texinfo" ]; then
   export PATH="/usr/local/opt/texinfo/bin:$PATH"
 fi
+
+# pipx
+export PATH="$PATH:$HOME/.local/bin"
+
+# Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
 
 # .zshrc.local for local settings
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
