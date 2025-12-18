@@ -12,16 +12,42 @@ setopt no_beep
 setopt auto_cd
 setopt notify
 
-if type brew &>/dev/null; then
-  HOMEBREW_PREFIX=$(brew --prefix)
-  FPATH=$HOMEBREW_PREFIX/share/zsh-completions:$FPATH
-  source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-  source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+# homebrew's path set to /opt/homebrew/bin/brew (in M1 mac) or /usr/local/bin/brew (in Intel mac)
+if [ -f /opt/homebrew/bin/brew ]; then
+  local HOMEBREW_BIN="/opt/homebrew/bin/brew"
+else
+  local HOMEBREW_BIN="/usr/local/bin/brew"
+fi
 
-  autoload -Uz compinit
-  compinit
+if type ${HOMEBREW_BIN} &>/dev/null; then
+  HOMEBREW_PREFIX=$(${HOMEBREW_BIN} --prefix)
+  FPATH=$HOMEBREW_PREFIX/share/zsh-completions:$FPATH
+
+  # Load zsh-autosuggestions if available
+  if [ -f $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    source $HOMEBREW_PREFIX/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  fi
+
+  # Load zsh-syntax-highlighting if available
+  if [ -f $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ]; then
+    source $HOMEBREW_PREFIX/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  fi
 
   export PATH="$HOMEBREW_PREFIX/bin:$PATH"
+fi
+
+# Enable completion system
+autoload -Uz compinit
+compinit
+
+# AWS CLI completion
+local aws_completer_path="/usr/local/bin/aws_completer"
+if [ -f "${aws_completer_path}" ]; then
+  # Enable bash-style completion for AWS CLI
+  autoload -Uz bashcompinit
+  bashcompinit
+
+  complete -C "${aws_completer_path}" aws
 fi
 
 setopt auto_list
@@ -57,7 +83,8 @@ precmd () {
   print -P $left${(r:$padwidth:: :)}$right
 }
 
-autoload -U colors; colors
+autoload -U colors
+colors
 
 # 通常
 tmp_prompt="%{${bg[green]}%}%n%{${reset_color}%} $ "
@@ -111,16 +138,20 @@ export NVIM_PYTHON_LOG_FILE="/tmp/nvim-python-log"
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
 
 # volta
-export VOLTA_HOME="$HOME/.volta"
-export PATH="$VOLTA_HOME/bin:$PATH"
-
-# mysql
-if [ -d "/usr/local/opt/mysql@5.7" ]; then
-  export PATH="/usr/local/opt/mysql@5.7/bin:$PATH"
+if [ -d "$HOME/.volta" ]; then
+  export VOLTA_HOME="$HOME/.volta"
+  export PATH="$VOLTA_HOME/bin:$PATH"
 fi
 
-if [ -d "/opt/homebrew/opt/mysql@8.0" ]; then
-  export PATH="/opt/homebrew/opt/mysql@8.0/bin:$PATH"
+# mysql
+if [ -n "$HOMEBREW_PREFIX" ]; then
+  if [ -d "$HOMEBREW_PREFIX/opt/mysql@5.7" ]; then
+    export PATH="$HOMEBREW_PREFIX/opt/mysql@5.7/bin:$PATH"
+  fi
+
+  if [ -d "$HOMEBREW_PREFIX/opt/mysql@8.0" ]; then
+    export PATH="$HOMEBREW_PREFIX/opt/mysql@8.0/bin:$PATH"
+  fi
 fi
 
 # golang
@@ -150,11 +181,13 @@ if [ -d "$HOME/.cargo" ]; then
 fi
 
 # imagemagick
-export PKG_CONFIG_PATH=/opt/ImageMagick/lib/pkgconfig
+if [ -d "/opt/ImageMagick" ]; then
+  export PKG_CONFIG_PATH=/opt/ImageMagick/lib/pkgconfig
+fi
 
 # texinfo
-if [ -d "/usr/local/opt/texinfo" ]; then
-  export PATH="/usr/local/opt/texinfo/bin:$PATH"
+if [ -n "$HOMEBREW_PREFIX" ] && [ -d "$HOMEBREW_PREFIX/opt/texinfo" ]; then
+  export PATH="$HOMEBREW_PREFIX/opt/texinfo/bin:$PATH"
 fi
 
 # pipx

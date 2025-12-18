@@ -84,14 +84,25 @@ vim.o.runtimepath = vim.o.runtimepath .. ',$HOME/go/src/golang.org/x/lint/misc/v
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    'git',
-    'clone',
-    '--filter=blob:none',
-    'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable',
-    lazypath,
-  })
+  local choice = vim.fn.confirm(
+    'lazy.nvim is not installed. Install it now?',
+    '&Yes\n&No',
+    1
+  )
+  if choice == 1 then
+    vim.fn.system({
+      'git',
+      'clone',
+      '--filter=blob:none',
+      'https://github.com/folke/lazy.nvim.git',
+      '--branch=stable',
+      lazypath,
+    })
+    print('lazy.nvim has been installed!')
+  else
+    print('lazy.nvim installation cancelled.')
+    return
+  end
 end
 vim.opt.rtp:prepend(lazypath)
 

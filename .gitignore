@@ -1,6 +1,15 @@
+# Ignore all .config by default
+.config/*
+
+# But include these tracked directories
+!.config/gocode/
+!.config/karabiner/
+!.config/nvim/
+
+# Exclude specific files within included directories
 .config/nvim/.netrwhist
-.config/karabiner/automatic_backups
-.config/configstore/update-notifier-npm.json
+.config/nvim/lazy-lock.json
+.config/karabiner/automatic_backups/
 .gitconfig
 
 # local files
